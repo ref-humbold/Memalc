@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(memalc VERSION 0.1.190423)
+project(Memalc VERSION 0.2.190628)
 
 # COMPILER
 set(CMAKE_C_STANDARD 99)
@@ -13,14 +13,15 @@ find_package(Threads REQUIRED)
 
 # SOURCES
 include_directories("${PROJECT_SOURCE_DIR}/include")
+
 set(MEMALC_SOURCES "${PROJECT_SOURCE_DIR}/src/memalc.c")
 set(PTHREADSEM_SOURCES "${PROJECT_SOURCE_DIR}/src/pthreadsem.c")
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
 add_library(memalc SHARED ${MEMALC_SOURCES})
 target_link_libraries(memalc Threads::Threads)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
 add_library(pthreadsem STATIC ${PTHREADSEM_SOURCES})
 target_link_libraries(pthreadsem Threads::Threads)
