@@ -12,16 +12,16 @@ set(THREADS_PREFER_PTHREAD_FLAG true)
 find_package(Threads REQUIRED)
 
 # SOURCES
-include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories(include)
 
-set(MEMALC_SOURCES "${PROJECT_SOURCE_DIR}/src/memalc.c")
-set(PTHREADSEM_SOURCES "${PROJECT_SOURCE_DIR}/src/pthreadsem.c")
+set(MEMALC_SOURCES src/memalc.c)
+set(PTHREADSEM_SOURCES src/pthreadsem.c)
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY dist)
 add_library(memalc SHARED ${MEMALC_SOURCES})
 target_link_libraries(memalc Threads::Threads)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY dist)
 add_library(pthreadsem STATIC ${PTHREADSEM_SOURCES})
 target_link_libraries(pthreadsem Threads::Threads)
