@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.10)
+
+# PACKAGES
+set(CMAKE_THREAD_PREFER_PTHREAD true)
+set(THREADS_PREFER_PTHREAD_FLAG true)
+find_package(Threads REQUIRED)
+
+# SOURCES
+set(MEMALC_SOURCES
+    memalc.c)
+
+set(PTHREADSEM_SOURCES
+    pthreadsem.c)
+
+# OUTPUT
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${LIB_OUTPUT_DIR}")
+add_library(memalc SHARED ${MEMALC_SOURCES})
+target_link_libraries(memalc Threads::Threads)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${LIB_OUTPUT_DIR}")
+add_library(pthreadsem STATIC ${PTHREADSEM_SOURCES})
+target_link_libraries(pthreadsem Threads::Threads)

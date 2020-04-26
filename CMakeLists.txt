@@ -1,9 +1,17 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(Memalc VERSION 0.2.190628)
+
+# PROPERTIES
+set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
+set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
+set(TEST_DIR "${PROJECT_SOURCE_DIR}/test")
+set(EXE_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/bin")
+set(LIB_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/dist")
+set(DOCS_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/docs")
 
 # COMPILER
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unknown-pragmas")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unknown-pragmas -O2")
 set(CMAKE_POSITION_INDEPENDENT_CODE true)
 
 # PACKAGES
@@ -12,16 +20,7 @@ set(THREADS_PREFER_PTHREAD_FLAG true)
 find_package(Threads REQUIRED)
 
 # SOURCES
-include_directories(include)
-
-set(MEMALC_SOURCES src/memalc.c)
-set(PTHREADSEM_SOURCES src/pthreadsem.c)
+include_directories("${INCLUDE_DIR}")
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY dist)
-add_library(memalc SHARED ${MEMALC_SOURCES})
-target_link_libraries(memalc Threads::Threads)
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY dist)
-add_library(pthreadsem STATIC ${PTHREADSEM_SOURCES})
-target_link_libraries(pthreadsem Threads::Threads)
+add_subdirectory("${SRC_DIR}")
