@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 project(Memalc VERSION 0.2.190628)
 
 # PROPERTIES
+set(MEMALC_LIB_NAME memalc)
+set(PTHREADSEM_LIB_NAME pthreadsem)
+
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(TEST_DIR "${PROJECT_SOURCE_DIR}/test")
@@ -20,7 +23,7 @@ set(THREADS_PREFER_PTHREAD_FLAG true)
 find_package(Threads REQUIRED)
 
 # SOURCES
-include_directories("${INCLUDE_DIR}")
+include_directories(${INCLUDE_DIR})
 
 # OUTPUT
-add_subdirectory("${SRC_DIR}")
+add_subdirectory(${SRC_DIR})
