@@ -1,12 +1,12 @@
 #ifndef PTHREAD_SEMAPHORE_H
 #define PTHREAD_SEMAPHORE_H
 
-#include <stdlib.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <sys/types.h>
 
 struct pthread_semaphore
 {

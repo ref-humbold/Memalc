@@ -7,7 +7,6 @@ set(PTHREADSEM_LIB_NAME pthreadsem)
 
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-set(TEST_DIR "${PROJECT_SOURCE_DIR}/test")
 set(OUTPUT_DIR "${PROJECT_SOURCE_DIR}/buildOut")
 set(EXE_OUTPUT_DIR "${OUTPUT_DIR}/bin")
 set(LIB_OUTPUT_DIR "${OUTPUT_DIR}/dist")

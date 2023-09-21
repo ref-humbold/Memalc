@@ -83,7 +83,6 @@ PLACE find_place(PTR ptr)
         if((PTR)ar_ptr + 32 == ptr && ar_ptr->length > 0 && ar_ptr->block_list == NULL)
         {
             mp.arena = ar_ptr;
-
             return mp;
         }
 
@@ -98,7 +97,6 @@ PLACE find_place(PTR ptr)
                 {
                     mp.arena = ar_ptr;
                     mp.block = bl_ptr;
-
                     return mp;
                 }
 
@@ -223,8 +221,12 @@ void print_free_mem_fcn()
  * @param prevf wskaźnik na poprzedni wolny blok
  * @param nextf wskaźnik na następny wolny blok
  */
-void set_block_fields(BLOCK_PTR bl_ptr, ssize_t ln, BLOCK_PTR prevb, BLOCK_PTR nextb,
-                      BLOCK_PTR prevf, BLOCK_PTR nextf)
+void set_block_fields(BLOCK_PTR bl_ptr,
+                      ssize_t ln,
+                      BLOCK_PTR prevb,
+                      BLOCK_PTR nextb,
+                      BLOCK_PTR prevf,
+                      BLOCK_PTR nextf)
 {
     bl_ptr->length = ln;
     bl_ptr->prev = prevb;
@@ -242,8 +244,12 @@ void set_block_fields(BLOCK_PTR bl_ptr, ssize_t ln, BLOCK_PTR prevb, BLOCK_PTR n
  * @param blist wskaźnik na pierszy blok listy
  * @param flist wskaźnik na pierszy wolny blok listy
  */
-void set_arena_fields(ARENA_PTR ar_ptr, ssize_t ln, ARENA_PTR preva, ARENA_PTR nexta,
-                      BLOCK_PTR blist, BLOCK_PTR flist)
+void set_arena_fields(ARENA_PTR ar_ptr,
+                      ssize_t ln,
+                      ARENA_PTR preva,
+                      ARENA_PTR nexta,
+                      BLOCK_PTR blist,
+                      BLOCK_PTR flist)
 {
     ar_ptr->length = ln;
     ar_ptr->prev = preva;
@@ -259,7 +265,9 @@ void set_arena_fields(ARENA_PTR ar_ptr, ssize_t ln, ARENA_PTR preva, ARENA_PTR n
  * @param prev_of_next poprzedni wskaźnik dla następnego
  * @param next_of_prev następny wskaźnik dla poprzedniego
  */
-void switch_fblock_pointers(ARENA_PTR ar_ptr, BLOCK_PTR bl_ptr, BLOCK_PTR prev_of_next,
+void switch_fblock_pointers(ARENA_PTR ar_ptr,
+                            BLOCK_PTR bl_ptr,
+                            BLOCK_PTR prev_of_next,
                             BLOCK_PTR next_of_prev)
 {
     if(bl_ptr->next_free != NULL)
@@ -281,7 +289,9 @@ void switch_fblock_pointers(ARENA_PTR ar_ptr, BLOCK_PTR bl_ptr, BLOCK_PTR prev_o
  * @param prev_of_next poprzedni wskaźnik dla następnego
  * @param next_of_prev następny wskaźnik dla poprzedniego
  */
-void switch_block_pointers(ARENA_PTR ar_ptr, BLOCK_PTR bl_ptr, BLOCK_PTR prev_of_next,
+void switch_block_pointers(ARENA_PTR ar_ptr,
+                           BLOCK_PTR bl_ptr,
+                           BLOCK_PTR prev_of_next,
                            BLOCK_PTR next_of_prev)
 {
     if(bl_ptr->next != NULL)
@@ -303,7 +313,9 @@ void switch_block_pointers(ARENA_PTR ar_ptr, BLOCK_PTR bl_ptr, BLOCK_PTR prev_of
  * @param prev_of_fw poprzedni wskaźnik dla następnego
  * @param next_of_bk następny wskaźnik dla poprzedniego
  */
-void switch_arena_pointers(ARENA_PTR ar_fw_ptr, ARENA_PTR ar_bk_ptr, ARENA_PTR prev_of_fw,
+void switch_arena_pointers(ARENA_PTR ar_fw_ptr,
+                           ARENA_PTR ar_bk_ptr,
+                           ARENA_PTR prev_of_fw,
                            ARENA_PTR next_of_bk)
 {
     if(ar_fw_ptr != NULL)
@@ -401,7 +413,9 @@ PTR alloc_to_arena(ARENA_PTR ar_back_ptr, ARENA_PTR ar_forw_ptr, ssize_t ln, int
  * @param second_fbl_ptr wskaźnik na wolny blok, który będziemy przyłączać
  * @param is_first_free czy pierwszy blok jest wolny
  */
-void concat_blocks(ARENA_PTR ar_ptr, BLOCK_PTR first_bl_ptr, BLOCK_PTR second_fbl_ptr,
+void concat_blocks(ARENA_PTR ar_ptr,
+                   BLOCK_PTR first_bl_ptr,
+                   BLOCK_PTR second_fbl_ptr,
                    int is_first_free)
 {
     if(first_bl_ptr != NULL && second_fbl_ptr != NULL && first_bl_ptr->next == second_fbl_ptr)
@@ -410,10 +424,10 @@ void concat_blocks(ARENA_PTR ar_ptr, BLOCK_PTR first_bl_ptr, BLOCK_PTR second_fb
         {
             free_space += 32 + absolute(first_bl_ptr->length);
             set_block_fields(
-                first_bl_ptr,
-                -(absolute(first_bl_ptr->length) + 32 + absolute(second_fbl_ptr->length)),
-                first_bl_ptr->prev, second_fbl_ptr->next, second_fbl_ptr->prev_free,
-                second_fbl_ptr->next_free);
+                    first_bl_ptr,
+                    -(absolute(first_bl_ptr->length) + 32 + absolute(second_fbl_ptr->length)),
+                    first_bl_ptr->prev, second_fbl_ptr->next, second_fbl_ptr->prev_free,
+                    second_fbl_ptr->next_free);
             switch_block_pointers(NULL, second_fbl_ptr, first_bl_ptr, NULL);
             switch_fblock_pointers(ar_ptr, second_fbl_ptr, first_bl_ptr, first_bl_ptr);
         }
@@ -421,10 +435,10 @@ void concat_blocks(ARENA_PTR ar_ptr, BLOCK_PTR first_bl_ptr, BLOCK_PTR second_fb
         {
             free_space += 32;
             set_block_fields(
-                first_bl_ptr,
-                -(absolute(first_bl_ptr->length) + 32 + absolute(second_fbl_ptr->length)),
-                first_bl_ptr->prev, second_fbl_ptr->next, first_bl_ptr->prev_free,
-                second_fbl_ptr->next_free);
+                    first_bl_ptr,
+                    -(absolute(first_bl_ptr->length) + 32 + absolute(second_fbl_ptr->length)),
+                    first_bl_ptr->prev, second_fbl_ptr->next, first_bl_ptr->prev_free,
+                    second_fbl_ptr->next_free);
             switch_block_pointers(NULL, second_fbl_ptr, first_bl_ptr, NULL);
             switch_fblock_pointers(NULL, second_fbl_ptr, first_bl_ptr, NULL);
         }
@@ -578,7 +592,6 @@ PTR malloc_fcn(size_t size)
             {
                 ar_forw_ptr->length = absolute(ar_forw_ptr->length);
                 free_space -= absolute(ar_forw_ptr->length);
-
                 return (PTR)ar_forw_ptr + 32;
             }
 
@@ -635,7 +648,6 @@ PTR calloc_fcn(size_t count, size_t size)
     PTR ret = malloc_fcn(count * size);
 
     ret = memset(ret, 0, norm_size);
-
     return ret;
 }
 
@@ -656,7 +668,6 @@ PTR alloc_and_move(ARENA_PTR ar_ptr, BLOCK_PTR bl_ptr, PTR del_ptr, ssize_t size
         ret = memmove(ret, (PTR)bl_ptr + 32, absolute(bl_ptr->length));
 
     free_fcn(del_ptr);
-
     return ret;
 }
 
@@ -676,14 +687,12 @@ PTR realloc_fcn(PTR ptr, size_t size)
     if(size == 0)
     {
         free_fcn(ptr);
-
         return NULL;
     }
 
     if(ptr < (PTR)arena_list)
     {
         errno = EINVAL;
-
         return MAP_FAILED;
     }
 
@@ -695,7 +704,6 @@ PTR realloc_fcn(PTR ptr, size_t size)
     if(ar_ptr == NULL && bl_ptr == NULL)
     {
         errno = EINVAL;
-
         return MAP_FAILED;
     }
 
@@ -714,9 +722,10 @@ PTR realloc_fcn(PTR ptr, size_t size)
         BLOCK_PTR forw_bl = bl_ptr->next;
 
         return forw_bl != NULL && forw_bl->length < 0
-                       && absolute(bl_ptr->length) + 32 + absolute(forw_bl->length) >= norm_size
-                   ? resize_and_move(ar_ptr, bl_ptr, forw_bl, norm_size)
-                   : alloc_and_move(NULL, bl_ptr, ptr, size);
+                               && absolute(bl_ptr->length) + 32 + absolute(forw_bl->length)
+                                          >= norm_size
+                       ? resize_and_move(ar_ptr, bl_ptr, forw_bl, norm_size)
+                       : alloc_and_move(NULL, bl_ptr, ptr, size);
     }
 
     return (PTR)bl_ptr + 32;

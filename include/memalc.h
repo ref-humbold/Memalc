@@ -1,14 +1,14 @@
 #ifndef MEMALC_H
 #define MEMALC_H
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <unistd.h>
 #include <sys/mman.h>
 #include <sys/types.h>
-#include <unistd.h>
 
 void * malloc(size_t size);
 
